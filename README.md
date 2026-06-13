@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Mendix](https://img.shields.io/badge/Mendix-10%2B-blue)](https://www.mendix.com)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG.md)
+[![Download](https://img.shields.io/badge/Download-.mpk-brightgreen?logo=mendix)](https://github.com/deepakraj8298/TitanGridPro/raw/main/widget/deera.TitanGrid.mpk)
 
 ---
 
@@ -67,9 +68,19 @@ Set Display As → `Custom (Widgets)` and drop a Mendix Text Box into the Cell W
 
 ---
 
+## ⬇️ Download
+
+| File | Size | Link |
+|------|------|------|
+| `deera.TitanGrid.mpk` | ~75 KB | [**⬇ Download v1.0.0**](https://github.com/deepakraj8298/TitanGridPro/raw/main/widget/deera.TitanGrid.mpk) |
+
+> Import the `.mpk` into Mendix Studio Pro via **App** → **Import Module Package**.
+
+---
+
 ## 📦 Quick Start
 
-1. **Install** — Import `deera.TitanGrid.mpk` into Studio Pro via **App** → **Import Module Package**
+1. **Download** — [deera.TitanGrid.mpk](https://github.com/deepakraj8298/TitanGridPro/raw/main/widget/deera.TitanGrid.mpk) and import into Studio Pro via **App** → **Import Module Package**
 2. **Domain Model** — Create three entities: Row, Column, Cell (Cell must have references to both Row and Column)
 3. **Drop** the widget on a page and configure the three data sources
 4. **Set Associations** — Map `referenceRow` and `referenceColumn` to your entity references
