@@ -7,6 +7,10 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](CHANGELOG.md)
 [![Download](https://img.shields.io/badge/Download-.mpk-brightgreen?logo=mendix)](https://github.com/deepakraj8298/TitanGridPro/raw/main/widget/deera.TitanGrid.mpk)
 
+<p align="center">
+  <img src="./assets/grid.gif" alt="TitanGrid Pro — live demo" width="100%" />
+</p>
+
 ---
 
 ## 🌟 What Makes TitanGrid Pro Unique?
