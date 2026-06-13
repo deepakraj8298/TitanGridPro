@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="deera.titangrid.TitanGrid" pluginWidget="true" needsEntityContext="true"
+    offlineCapable="true"
+    supportedPlatform="Web"
+    xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>TitanGrid Pro</name>
+    <description>High-performance matrix data grid with 3-datasource pivot-style layout, virtual scrolling, bidirectional pagination, aggregations (Sum/Avg/Count), CSV and Excel export, mobile card view, column pinning, and zero external dependencies.</description>
+    <icon />
+    <properties>
+        <!-- Tab 1: Data & Logic -->
+        <propertyGroup caption="Data &amp; Logic">
+            <propertyGroup caption="Cell Data">
+                <property key="dataSourceCell" type="datasource" isList="true">
+                    <caption>Cell Data Source</caption>
+                    <description>Main data source for the grid cells</description>
+                </property>
+                <property key="showCellAs" type="enumeration" defaultValue="attribute">
+                    <caption>Display As</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="attribute">Attribute</enumerationValue>
+                        <enumerationValue key="dynamicText">Dynamic Text</enumerationValue>
+                        <enumerationValue key="custom">Custom (Widgets)</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="cellAttribute" type="attribute" dataSource="dataSourceCell">
+                    <caption>Cell Attribute</caption>
+                    <description />
+                    <attributeTypes>
+                        <attributeType name="String" />
+                    </attributeTypes>
+                </property>
+                <property key="cellTextTemplate" type="textTemplate" multiline="false" dataSource="dataSourceCell">
+                    <caption>Cell Text Template</caption>
+                    <description />
+                    <translations><translation lang="en_US" /></translations>
+                </property>
+                <property key="cellWidgets" type="widgets" dataSource="dataSourceCell">
+                    <caption>Cell Widgets</caption>
+                    <description />
+                </property>
+                <property key="tooltipCell" type="textTemplate" required="false" dataSource="dataSourceCell">
+                    <caption>Cell Tooltip</caption>
+                    <description />
+                </property>
+                <property key="tooltipCellType" type="enumeration" defaultValue="default">
+                    <caption>Tooltip Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="default">Default</enumerationValue>
+                        <enumerationValue key="custom">Custom HTML</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="tooltipCellCustom" type="expression" required="false" dataSource="dataSourceCell">
+                    <caption>Custom Tooltip</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+                <property key="cellClass" type="expression" required="false" dataSource="dataSourceCell">
+                    <caption>Cell Class</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Row Data">
+                <property key="dataSourceRow" type="datasource" isList="true">
+                    <caption>Row Data Source</caption>
+                    <description />
+                </property>
+                <property key="referenceRow" type="association" selectableObjects="dataSourceRow" dataSource="dataSourceCell">
+                    <caption>Row Association</caption>
+                    <description />
+                    <associationTypes><associationType name="Reference" /></associationTypes>
+                </property>
+                <property key="showRowAs" type="enumeration" defaultValue="none">
+                    <caption>Row Header</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">None</enumerationValue>
+                        <enumerationValue key="attribute">Attribute</enumerationValue>
+                        <enumerationValue key="dynamicText">Dynamic Text</enumerationValue>
+                        <enumerationValue key="custom">Custom Content</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="rowAttribute" type="attribute" dataSource="dataSourceRow">
+                    <caption>Header Attribute</caption>
+                    <description />
+                    <attributeTypes><attributeType name="String" /></attributeTypes>
+                </property>
+                <property key="rowTextTemplate" type="textTemplate" multiline="false" dataSource="dataSourceRow">
+                    <caption>Header Text</caption>
+                    <description />
+                    <translations><translation lang="en_US" /></translations>
+                </property>
+                <property key="rowWidgets" type="widgets" dataSource="dataSourceRow">
+                    <caption>Header Widgets</caption>
+                    <description />
+                </property>
+                <property key="showRowColumnNameAs" type="enumeration" defaultValue="dynamicText">
+                    <caption>Corner Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="dynamicText">Dynamic Text</enumerationValue>
+                        <enumerationValue key="custom">Custom Content</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="rowColumnNameTextTemplate" required="false" type="textTemplate" multiline="false">
+                    <caption>Corner Text</caption>
+                    <description />
+                    <translations><translation lang="en_US" /></translations>
+                </property>
+                <property key="rowColumnNameWidgets" type="widgets">
+                    <caption>Corner Widgets</caption>
+                    <description />
+                </property>
+                <property key="tooltipRow" type="textTemplate" required="false" dataSource="dataSourceRow">
+                    <caption>Row Tooltip</caption>
+                    <description />
+                </property>
+                <property key="tooltipRowType" type="enumeration" defaultValue="default">
+                    <caption>Row Tooltip Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="default">Default</enumerationValue>
+                        <enumerationValue key="custom">Custom HTML</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="tooltipRowCustom" type="expression" required="false" dataSource="dataSourceRow">
+                    <caption>Custom Row Tooltip</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+                <property key="rowClass" type="expression" required="false" dataSource="dataSourceRow">
+                    <caption>Row Class</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Column Data">
+                <property key="dataSourceColumn" type="datasource" isList="true">
+                    <caption>Column Data Source</caption>
+                    <description />
+                </property>
+                <property key="referenceColumn" type="association" selectableObjects="dataSourceColumn" dataSource="dataSourceCell">
+                    <caption>Col Association</caption>
+                    <description />
+                    <associationTypes><associationType name="Reference" /></associationTypes>
+                </property>
+                <property key="showHeaderAs" type="enumeration" defaultValue="attribute">
+                    <caption>Column Header</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">None</enumerationValue>
+                        <enumerationValue key="firstRow">First Row of Data</enumerationValue>
+                        <enumerationValue key="attribute">Attribute</enumerationValue>
+                        <enumerationValue key="dynamicText">Dynamic Text</enumerationValue>
+                        <enumerationValue key="custom">Custom Content</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="headerAttribute" type="attribute" dataSource="dataSourceColumn">
+                    <caption>Header Attribute</caption>
+                    <description />
+                    <attributeTypes><attributeType name="String" /></attributeTypes>
+                </property>
+                <property key="headerTextTemplate" type="textTemplate" multiline="false" dataSource="dataSourceColumn">
+                    <caption>Header Text</caption>
+                    <description />
+                    <translations><translation lang="en_US" /></translations>
+                </property>
+                <property key="headerWidgets" type="widgets" dataSource="dataSourceColumn">
+                    <caption>Header Widgets</caption>
+                    <description />
+                </property>
+                <property key="tooltipColumn" type="textTemplate" required="false" dataSource="dataSourceColumn">
+                    <caption>Column Tooltip</caption>
+                    <description />
+                </property>
+                <property key="tooltipColumnType" type="enumeration" defaultValue="default">
+                    <caption>Column Tooltip Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="default">Default</enumerationValue>
+                        <enumerationValue key="custom">Custom HTML</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="tooltipColumnCustom" type="expression" required="false" dataSource="dataSourceColumn">
+                    <caption>Custom Column Tooltip</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+                <property key="columnClass" type="expression" required="false" dataSource="dataSourceColumn">
+                    <caption>Column Class</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Grid Interactions">
+                <property key="onClickTrigger" type="enumeration" defaultValue="single">
+                    <caption>Click Trigger</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="single">Single Click</enumerationValue>
+                        <enumerationValue key="double">Double Click</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="onClickCell" type="action" required="false" dataSource="dataSourceCell">
+                    <caption>On Cell Click</caption>
+                    <description />
+                </property>
+                <property key="onClickRow" type="action" required="false" dataSource="dataSourceRow">
+                    <caption>On Row Click</caption>
+                    <description />
+                </property>
+                <property key="onClickRowHeader" type="action" required="false" dataSource="dataSourceRow">
+                    <caption>On Header Click</caption>
+                    <description />
+                </property>
+                <property key="onClickColumn" type="action" required="false" dataSource="dataSourceColumn">
+                    <caption>On Column Click</caption>
+                    <description />
+                </property>
+                <property key="onClickColumnHeader" type="action" required="false" dataSource="dataSourceColumn">
+                    <caption>On Header Click</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Empty State">
+                <property key="emptyMessage" type="expression" required="false">
+                    <caption>Empty Message</caption>
+                    <description>Message to show when the grid has no data.</description>
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+
+        <!-- Tab 2: Look & Feel -->
+        <propertyGroup caption="Look &amp; Feel">
+            <propertyGroup caption="Theme">
+                <property key="gridTheme" type="enumeration" defaultValue="alpine">
+                    <caption>Grid Theme</caption>
+                    <description>Overall visual style</description>
+                    <enumerationValues>
+                        <enumerationValue key="alpine">Alpine (Clean)</enumerationValue>
+                        <enumerationValue key="material">Material Design</enumerationValue>
+                        <enumerationValue key="bootstrap">Bootstrap</enumerationValue>
+                        <enumerationValue key="dark">Dark Theme</enumerationValue>
+                        <enumerationValue key="minimal">Minimal</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="fontSize" type="enumeration" defaultValue="size12">
+                    <caption>Font Size</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="size10">Small (10px)</enumerationValue>
+                        <enumerationValue key="size12">Normal (12px)</enumerationValue>
+                        <enumerationValue key="size14">Medium (14px)</enumerationValue>
+                        <enumerationValue key="size16">Large (16px)</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Borders &amp; Lines">
+                <property key="gridBorderStyle" type="enumeration" defaultValue="all">
+                    <caption>Grid Borders</caption>
+                    <description>Which borders to display</description>
+                    <enumerationValues>
+                        <enumerationValue key="all">All Borders</enumerationValue>
+                        <enumerationValue key="horizontal">Horizontal Only</enumerationValue>
+                        <enumerationValue key="vertical">Vertical Only</enumerationValue>
+                        <enumerationValue key="none">No Borders</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="gridBorderLineStyle" type="enumeration" defaultValue="solid">
+                    <caption>Border Line Style</caption>
+                    <description>Style of the border lines</description>
+                    <enumerationValues>
+                        <enumerationValue key="solid">Solid</enumerationValue>
+                        <enumerationValue key="dashed">Dashed</enumerationValue>
+                        <enumerationValue key="dotted">Dotted</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="rowBorderStyle" type="enumeration" defaultValue="light">
+                    <caption>Row Border Weight</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">None</enumerationValue>
+                        <enumerationValue key="light">Light</enumerationValue>
+                        <enumerationValue key="medium">Medium</enumerationValue>
+                        <enumerationValue key="heavy">Heavy</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="headerFontWeight" type="enumeration" defaultValue="weight600">
+                    <caption>Header Font Weight</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="weight400">Normal</enumerationValue>
+                        <enumerationValue key="weight500">Medium</enumerationValue>
+                        <enumerationValue key="weight600">Semi Bold</enumerationValue>
+                        <enumerationValue key="weight700">Bold</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="enableAlternatingRows" type="boolean" defaultValue="true">
+                    <caption>Alternating Rows</caption>
+                    <description />
+                </property>
+                <property key="enableRowHover" type="boolean" defaultValue="true">
+                    <caption>Row Hover</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Sizing">
+                <property key="gridWidth" type="string" required="false" defaultValue="100%">
+                    <caption>Grid Width</caption>
+                    <description>e.g., "100%", "800px"</description>
+                </property>
+                <property key="gridHeight" type="string" required="false" defaultValue="500px">
+                    <caption>Grid Height</caption>
+                    <description>e.g., "500px", "100vh"</description>
+                </property>
+                <property key="maxGridWidth" type="string" required="false" defaultValue="100vw">
+                    <caption>Maximum Width</caption>
+                    <description>e.g., "1200px"</description>
+                </property>
+                <property key="maxGridHeight" type="string" required="false" defaultValue="800px">
+                    <caption>Maximum Height</caption>
+                    <description>e.g., "80vh"</description>
+                </property>
+                <property key="minGridWidth" type="string" required="false" defaultValue="300px">
+                    <caption>Minimum Width</caption>
+                    <description />
+                </property>
+                <property key="minGridHeight" type="string" required="false" defaultValue="200px">
+                    <caption>Minimum Height</caption>
+                    <description />
+                </property>
+                <property key="columnWidthMode" type="enumeration" defaultValue="auto">
+                    <caption>Column Width Mode</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="auto">Auto</enumerationValue>
+                        <enumerationValue key="resizable">Resizable</enumerationValue>
+                        <enumerationValue key="manual">Manual</enumerationValue>
+                        <enumerationValue key="equal">Equal Width</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="manualColumnWidth" type="integer" defaultValue="120">
+                    <caption>Manual Width (px)</caption>
+                    <description />
+                </property>
+                <property key="columnAlignment" type="enumeration" defaultValue="left">
+                    <caption>Column Alignment</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="left">Left</enumerationValue>
+                        <enumerationValue key="center">Center</enumerationValue>
+                        <enumerationValue key="right">Right</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="columnTextWrap" type="boolean" defaultValue="false">
+                    <caption>Column Text Wrap</caption>
+                    <description />
+                </property>
+                <property key="rowHeightMode" type="enumeration" defaultValue="auto">
+                    <caption>Row Height Mode</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="auto">Auto</enumerationValue>
+                        <enumerationValue key="compact">Compact (24px)</enumerationValue>
+                        <enumerationValue key="comfortable">Comfortable (32px)</enumerationValue>
+                        <enumerationValue key="spacious">Spacious (40px)</enumerationValue>
+                        <enumerationValue key="manual">Manual</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="manualRowHeight" type="integer" defaultValue="28">
+                    <caption>Manual Height (px)</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Custom Color Palette">
+                <property key="headerBackgroundColor" type="string" defaultValue="#f5f7fa">
+                    <caption>Header Background</caption>
+                    <description />
+                </property>
+                <property key="evenRowColor" type="string" defaultValue="#f9f9f9">
+                    <caption>Even Row Background</caption>
+                    <description />
+                </property>
+                <property key="oddRowColor" type="string" defaultValue="#ffffff">
+                    <caption>Odd Row Background</caption>
+                    <description />
+                </property>
+                <property key="hoverRowColor" type="string" defaultValue="#e1f5fe">
+                    <caption>Hover Row Background</caption>
+                    <description />
+                </property>
+                <property key="borderColor" type="string" defaultValue="#BDC3C7">
+                    <caption>Border Color</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Scrollbars">
+                <property key="scrollbarStyle" type="enumeration" required="true" defaultValue="modern">
+                    <caption>Style</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="modern">Modern</enumerationValue>
+                        <enumerationValue key="minimal">Minimal</enumerationValue>
+                        <enumerationValue key="classic">Classic</enumerationValue>
+                        <enumerationValue key="hidden">Hidden</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="scrollbarWidth" type="enumeration" required="true" defaultValue="normal">
+                    <caption>Thickness</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="thin">Thin</enumerationValue>
+                        <enumerationValue key="normal">Normal</enumerationValue>
+                        <enumerationValue key="thick">Thick</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="enableHorizontalScroll" type="boolean" required="true" defaultValue="true">
+                    <caption>Horizontal Scroll</caption>
+                    <description />
+                </property>
+                <property key="enableVerticalScroll" type="boolean" required="true" defaultValue="true">
+                    <caption>Vertical Scroll</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+
+        <!-- Tab 3: Advanced Grid Tools -->
+        <propertyGroup caption="Advanced Grid Tools">
+            <propertyGroup caption="Aggregation (Totals)">
+                <property key="enableRowAggregation" type="boolean" defaultValue="false">
+                    <caption>Row Aggregation</caption>
+                    <description>Show summaries in footer/header row</description>
+                </property>
+                <property key="rowAggregationType" type="enumeration" defaultValue="inbuilt">
+                    <caption>Row Calculation Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="inbuilt">Inbuilt</enumerationValue>
+                        <enumerationValue key="custom">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="rowAggregationFunction" type="enumeration" defaultValue="sum">
+                    <caption>Row Function</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="sum">Sum</enumerationValue>
+                        <enumerationValue key="avg">Average</enumerationValue>
+                        <enumerationValue key="count">Count</enumerationValue>
+                        <enumerationValue key="min">Min</enumerationValue>
+                        <enumerationValue key="max">Max</enumerationValue>
+                        <enumerationValue key="first">First</enumerationValue>
+                        <enumerationValue key="last">Last</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="rowCustomAggregation" type="action" required="false">
+                    <caption>Custom Row Logic</caption>
+                    <description />
+                </property>
+                <property key="rowAggregationLabel" type="string" defaultValue="Total">
+                    <caption>Row Label</caption>
+                    <description />
+                </property>
+                <property key="rowAggregationFormat" type="string" required="false">
+                    <caption>Row Format</caption>
+                    <description>e.g. ${value}, {value:n2}</description>
+                </property>
+                <property key="aggregationPosition" type="enumeration" defaultValue="bottom">
+                    <caption>Row Position</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="top">Top</enumerationValue>
+                        <enumerationValue key="bottom">Bottom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="enableColumnAggregation" type="boolean" defaultValue="false">
+                    <caption>Column Aggregation</caption>
+                    <description>Show summaries in last/first column</description>
+                </property>
+                <property key="columnAggregationType" type="enumeration" defaultValue="inbuilt">
+                    <caption>Col Calculation Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="inbuilt">Inbuilt</enumerationValue>
+                        <enumerationValue key="custom">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="columnAggregationFunction" type="enumeration" defaultValue="sum">
+                    <caption>Column Function</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="sum">Sum</enumerationValue>
+                        <enumerationValue key="avg">Average</enumerationValue>
+                        <enumerationValue key="count">Count</enumerationValue>
+                        <enumerationValue key="min">Min</enumerationValue>
+                        <enumerationValue key="max">Max</enumerationValue>
+                        <enumerationValue key="first">First</enumerationValue>
+                        <enumerationValue key="last">Last</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="columnCustomAggregation" type="action" required="false">
+                    <caption>Custom Col Logic</caption>
+                    <description />
+                </property>
+                <property key="columnAggregationLabel" type="string" defaultValue="Total">
+                    <caption>Column Label</caption>
+                    <description />
+                </property>
+                <property key="columnAggregationFormat" type="string" required="false">
+                    <caption>Col Format</caption>
+                    <description />
+                </property>
+                <property key="columnAggregationPosition" type="enumeration" defaultValue="right">
+                    <caption>Column Position</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="left">Left</enumerationValue>
+                        <enumerationValue key="right">Right</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="aggregationAttributeName" type="string" required="false">
+                    <caption>Attribute Mapping</caption>
+                    <description>Attribute name to use for custom aggregation logic</description>
+                </property>
+                <property key="showAggregationLabels" type="boolean" defaultValue="true">
+                    <caption>Summary Labels</caption>
+                    <description />
+                </property>
+                <property key="rowCustomAggregationContent" type="widgets">
+                    <caption>Custom Row Summary</caption>
+                    <description />
+                </property>
+                <property key="columnCustomAggregationContent" type="widgets">
+                    <caption>Custom Col Summary</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Sort &amp; Filter">
+                <property key="enableSorting" type="boolean" defaultValue="false">
+                    <caption>Sorting</caption>
+                    <description />
+                </property>
+                <property key="enableGlobalFilter" type="boolean" defaultValue="false">
+                    <caption>Global Filter</caption>
+                    <description />
+                </property>
+                <property key="globalFilterAlignment" type="enumeration" defaultValue="right">
+                    <caption>Global Filter Alignment</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="left">Left</enumerationValue>
+                        <enumerationValue key="right">Right</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="enableColumnFilter" type="boolean" defaultValue="false">
+                    <caption>Column Inline Filters</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Headers &amp; Pinning">
+                <property key="pinTopRows" type="integer" defaultValue="0">
+                    <caption>Sticky Top Rows</caption>
+                    <description />
+                </property>
+                <property key="pinBottomRows" type="integer" defaultValue="0">
+                    <caption>Sticky Bottom Rows</caption>
+                    <description />
+                </property>
+                <property key="pinLeftColumns" type="integer" defaultValue="0">
+                    <caption>Sticky Left Columns</caption>
+                    <description />
+                </property>
+                <property key="pinRightColumns" type="integer" defaultValue="0">
+                    <caption>Sticky Right Columns</caption>
+                    <description />
+                </property>
+                <property key="pinTotalRow" type="boolean" defaultValue="false">
+                    <caption>Sticky Total Row</caption>
+                    <description />
+                </property>
+                <property key="pinTotalColumn" type="boolean" defaultValue="false">
+                    <caption>Sticky Total Column</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Runtime Management">
+                <property key="enableColumnReordering" type="boolean" defaultValue="false">
+                    <caption>Column Reordering</caption>
+                    <description />
+                </property>
+                <property key="enableColumnHiding" type="boolean" defaultValue="false">
+                    <caption>Column Hiding</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Performance">
+                <property key="paginationMode" type="enumeration" defaultValue="none">
+                    <caption>Pagination</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">No</enumerationValue>
+                        <enumerationValue key="row">Row Wise</enumerationValue>
+                        <enumerationValue key="column">Column Wise</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="pageSize" type="integer" defaultValue="20">
+                    <caption>Per Page</caption>
+                    <description />
+                </property>
+                <property key="paginationAlignment" type="enumeration" defaultValue="right">
+                    <caption>Pagination Alignment</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="left">Left</enumerationValue>
+                        <enumerationValue key="center">Center</enumerationValue>
+                        <enumerationValue key="right">Right</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="enableVirtualization" type="boolean" defaultValue="false">
+                    <caption>Row Virtualization</caption>
+                    <description>Optimizes 1000+ rows</description>
+                </property>
+                <property key="overscan" type="integer" defaultValue="10">
+                    <caption>Virtualization Overscan</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+
+        <!-- Tab 4: Exports & Mobility -->
+        <propertyGroup caption="Exports &amp; Mobility">
+            <propertyGroup caption="Data Exports">
+                <property key="exportFormat" type="enumeration" defaultValue="none">
+                    <caption>Export Format</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">None</enumerationValue>
+                        <enumerationValue key="csv">CSV Only</enumerationValue>
+                        <enumerationValue key="excel">Excel Only</enumerationValue>
+                        <enumerationValue key="both">CSV and Excel</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="exportDisplay" type="enumeration" defaultValue="button">
+                    <caption>Export Location</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="button">Toolbar Button</enumerationValue>
+                        <enumerationValue key="rightClick">Right-Click Menu</enumerationValue>
+                        <enumerationValue key="both">Both</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="exportFileName" type="expression" required="false">
+                    <caption>Export Filename</caption>
+                    <description />
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Reporting">
+                <property key="printOption" type="enumeration" defaultValue="none">
+                    <caption>Print Features</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="none">Disabled</enumerationValue>
+                        <enumerationValue key="button">Toolbar Button</enumerationValue>
+                        <enumerationValue key="rightClick">Right-Click Menu</enumerationValue>
+                        <enumerationValue key="both">Both</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
+
+            <propertyGroup caption="Mobile">
+                <property key="enableMobileView" type="boolean" defaultValue="true">
+                    <caption>Mobile View</caption>
+                    <description>Switches to card layout on small screens</description>
+                </property>
+                <property key="responsiveBreakpoint" type="enumeration" required="true" defaultValue="s768px">
+                    <caption>Breakpoint</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="s480px">Mobile (480px)</enumerationValue>
+                        <enumerationValue key="s768px">Phablet (768px)</enumerationValue>
+                        <enumerationValue key="s1024px">Tablet (1024px)</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="mobileBreakpoint" type="integer" defaultValue="768">
+                    <caption>Manual Breakpoint (px)</caption>
+                    <description />
+                </property>
+                <property key="mobileGridHeight" type="string" required="false" defaultValue="400px">
+                    <caption>Mobile Grid Height</caption>
+                    <description />
+                </property>
+                <property key="enableResponsiveScrollbars" type="boolean" required="true" defaultValue="true">
+                    <caption>Scrollbars</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+    </properties>
+</widget>
